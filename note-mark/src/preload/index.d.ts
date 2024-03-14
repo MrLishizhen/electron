@@ -1,5 +1,5 @@
 import { ElectronAPI } from '@electron-toolkit/preload'
-import { GetNotes, ReadNote } from '@shared/types'
+import { GetNotes, ReadNote, WriteNode, CreateNote } from '@shared/types'
 declare global {
   interface Window {
     // electron: ElectronAPI
@@ -8,6 +8,7 @@ declare global {
       getNotes: GetNotes
       readNote: ReadNote
       writeNode: WriteNode
+      createNote: CreateNote
     }
   }
 }
