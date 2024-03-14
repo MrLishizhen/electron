@@ -9,6 +9,7 @@ declare global {
       readNote: ReadNote
       writeNode: WriteNode
       createNote: CreateNote
+      deleteNote: DeleteNote
     }
   }
 }
