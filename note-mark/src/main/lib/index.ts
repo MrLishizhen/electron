@@ -3,8 +3,11 @@ import path from 'path'
 import { dialog } from 'electron'
 import { NoteInfo } from '@shared/models'
 import { GetNotes, ReadNote, WriteNote, CreateNote, DeleteNote } from '@shared/types'
-import { appDirectoryName, fileEncoding } from '@shared/constants'
+import { appDirectoryName, fileEncoding, webcomeNoteFilename } from '@shared/constants'
 import { remove, ensureDir, readdir, stat, readFile, writeFile } from 'fs-extra'
+import { isEmpty } from 'lodash'
+import welcomeNoteFile from '../../../resources/welcomeNote.md?asset'
+
 // import { stat } from 'fs'
 export const getRootDir = () => {
   console.log(homedir())
@@ -21,6 +24,13 @@ export const getNotes: GetNotes = async () => {
   })
 
   const notes = notesFileNames.filter((fileName) => fileName.endsWith('.md'))
+
+  if (isEmpty(notes)) {
+    console.info('No notes found, creating a welcome note')
+    const content = await readFile(welcomeNoteFile, { encoding: fileEncoding })
+    await writeFile(`${rootDir}/${webcomeNoteFilename}`, content, { encoding: fileEncoding })
+    notes.push(webcomeNoteFilename)
+  }
   return Promise.all(notes.map(getNoteInfoFromFilename))
 }
 
