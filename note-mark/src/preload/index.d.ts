@@ -7,6 +7,7 @@ declare global {
       locale: string
       getNotes: GetNotes
       readNote: ReadNote
+      writeNode: WriteNode
     }
   }
 }
